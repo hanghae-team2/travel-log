@@ -7,14 +7,30 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
-# DB 기본 코드
 
+# DB 기본 코드
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] =\
     'sqlite:///' + os.path.join(basedir, 'database.db')
 
 db = SQLAlchemy(app)
+
+# TravelDestination DB를 만들기 위한 설계도
+# class TravelDestination(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+#     description = db.Column(db.String(500), nullable=False)
+#     title = db.Column(db.String(100), nullable=False)
+#     location = db.Column(db.String(100), nullable=False)
+#     image_url = db.Column(db.String(10000), nullable=False)
+#     likes = db.Column(db.Integer, nullable=False)
+
+#     def __repr__(self):
+#         return f'{self.location} {self.title} {self.likes} 추천 by {self.user_id}'
+
+# with app.app_context():
+#     db.create_all()
 
 
 @app.route("/")
@@ -24,6 +40,12 @@ def home():
 
 @app.route("/byuser/")
 def byuser():
+    return render_template('by-user.html')
+
+# Registration Page
+@app.route("/create/")
+def registration():
+    # 나중에 주소 바꿔야 합니다
     return render_template('by-user.html')
 
 
