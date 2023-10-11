@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{data.title}} | 전국팔도 구석구석</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+  </head>
+  <style>
+    .header__meta {
+      display: flex;
+      flex-direction: column;
+      text-align: end;
+    }
+    .post__description {
+      padding: 32px 0;
+      font-size: 1.5rem;
+    }
+    .post__image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .post__img {
+      width: 80%;
+    }
+    footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  <body>
+    <header>
+      <h1>{{data.title}}</h1>
+      <div class="header__meta">
+        <p>추천 by {{data.user_id}}</p>
+        <p>{{data.location}}</p>
+      </div>
+    </header>
+    <main>
+      <div class="post__image-container">
+        <img class="post__img" src="{{data.image_url}}" alt="" />
+      </div>
+      <div>
+        <p class="post__description">{{data.description}}</p>
+      </div>
+    </main>
+    <footer><button>좋아요 &nbsp; {{data.likes}}</button></footer>
+  </body>
+</html>

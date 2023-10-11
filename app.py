@@ -4,6 +4,7 @@
 1. render_template : html파일을 가져와서 보여준다
 '''
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import Session
 from flask_bcrypt import Bcrypt
 import os
 from flask import Flask, render_template, request, redirect, url_for
@@ -142,6 +143,25 @@ def postSignup():
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for('getLogin'))
+
+
+@app.route('/favourite/<id>',  methods=['GET'])
+def post(id):
+    post = TravelDestination.query.get(id)
+    if not post:
+        return redirect(url_for("home"))
+
+    data = {
+        "id": id,
+        "title": post.title,
+        "description": post.description,
+        "location": post.location,
+        "image_url": post.image_url,
+        "likes": post.likes,
+        # TODO(Joonyoung) username으로 변경
+        "user_id": post.user_id
+    }
+    return render_template('post.html', data=data)
 
 
 if __name__ == "__main__":
