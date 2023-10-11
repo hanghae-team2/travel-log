@@ -23,7 +23,7 @@
 
     <div class="header">
       <img src="https://cdn.pixabay.com/photo/2018/01/31/05/43/web-3120321_640.png" alt="travel bag">
-      <h1>{{ data }}</h1>
+      <h1>전국팔도 구석구석</h1>
     </div>
 
     <div class="by-location">
@@ -37,15 +37,16 @@
       <!-- Cards -->
       <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
         <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
-        {% for photo in data %}
+        {% for favorite in data %}
         <div class="col">
           <div class="card h-100">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZAq08u4YaR0Jsu2CgeptdxC74y-9QEeFYEAb6YHP&s"
+            <img src="{{favorite.image_url}}"
               class="card-img-top" alt="...">
             <div class="card-body">
-              <h5 class="card-title">{{photo}}</h5>
-              <p class="card-text">{{photo}}</p>
-              <p class="card-text">추천인: {{photo}}</p>
+              <h5 class="card-title">{{favorite.title}}</h5>
+              <p class="card-text">{{favorite.location}}</p>
+              <p class="card-text">{{favorite.description}}</p>
+              <p class="card-text">추천인: {{favorite.user_id}}</p>
             </div>
           </div>
         </div>
