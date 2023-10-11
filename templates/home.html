@@ -1,30 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>전국팔도 구석구석</title>
-    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li>HOME</li>
-          <li>DASHBOARD</li>
-          <li>PROFILE</li>
-          <li>LOGOUT</li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <h1>hello</h1>
-      <p>hello</p>
-      <form action="">
-        <input type="text" placeholder="User id" />
-        <input type="password" placeholder="Password" />
-        <button>Submit</button>
-      </form>
-    </main>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전국팔도 구석구석 | 항해 웹 미니 프로젝트</title>
+  <!-- bootstrap css cdn -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <!-- https://flask.palletsprojects.com/en/3.0.x/quickstart/#static-files -->
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css')}}">
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar">
+      <ul>
+        <li><a href="">Log in</a></li>
+        <li><a href="">Sign up</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h1 class="title">{{ data }}</h1>
+    </div>
+    <div class="by-cities">
+      <ul>
+        <li><a href="">서울</a></li>
+        <li><a href="">부산</a></li>
+        <li><a href="">대전</a></li>
+        <li><a href="">대구</a></li>
+      </ul>
+    </div>
+
+    <!-- Cards -->
+    <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
+      <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
+      {% for photo in data %}
+      <div class="col">
+        <div class="card h-100">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZAq08u4YaR0Jsu2CgeptdxC74y-9QEeFYEAb6YHP&s"
+            class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{photo}}</h5>
+            <p class="card-text">{{photo}}</p>
+            <p class="card-text">추천인: {{photo}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <footer>
+      <p>All rights reserved.</p>
+    </footer>
+  </div>
+  <!-- bootstrap js cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
