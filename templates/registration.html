@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* css */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column
+        }
+        .title {
+            display: flex;
+            justify-content: center;
+            height: 10vh;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+<div class="fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="dialog" role="document">
+      <div class="content">
+        <div class="header">
+          <h1 class="title" id="exampleModalLabel">여행지 등록</h1>
+        </div>
+        <div class="body">
+          <form class="container"id="travelForm" onsubmit="submitForm(event)">
+            <label for="location">위치:</label>
+            <input type="text" id="location" name="location" required><br><br>
+  
+            <label for="title">제목:</label>
+            <input type="text" id="title" name="title" required><br><br>
+  
+            <label for="description">설명:</label><br>
+            <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+  
+            <label for="imageUrl">사진 URL:</label>
+            <input type="text" id="imageUrl" name="imageUrl" required><br><br>
+  
+            <button type="submit" class="btn btn-success">등록하기</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
