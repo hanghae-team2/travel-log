@@ -19,3 +19,14 @@ html, css, flask로 여행지 추천 사이트 만들어 보기
 ## ERD
 
 <img src="https://github.com/hanghae-team2/travel-log/assets/50318500/9c96788a-fff6-419b-bf51-faa34d309cdf" width="500">
+
+
+## API SPEC
+
+|기능|METHOD|URL|Req body|Res body|
+|:--|:--:|:--|:--|:--|
+|Landing page|GET|/|||
+|Landing page + filter|GET|/?location=:location|||
+|개별 게시물 페이지|GET|/favourite/:id|||
+|Login 페이지|GET|/login|||
+|Login|POST|/favourite/:id|{userId: string, pw: string}||
