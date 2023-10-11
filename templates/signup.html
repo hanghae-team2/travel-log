@@ -24,7 +24,7 @@
         <input
           id="password1"
           name="password1"
-          type="text"
+          type="password"
           placeholder="비밀번호를 입력하세요"
           required
         />
@@ -32,10 +32,13 @@
         <input
           id="password2"
           name="password2"
-          type="text"
+          type="password"
           placeholder="비밀번호를 다시 입력하세요"
           required
         />
+        <div>
+          <p style="color: red">{{error_message}}</p>
+        </div>
         <button type="submit">회원가입</button>
       </form>
       <div>

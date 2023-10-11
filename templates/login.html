@@ -24,15 +24,20 @@
         <input
           id="password"
           name="password"
-          type="text"
+          type="password"
           placeholder="비밀번호를 입력하세요"
           required
         />
+        <div>
+          <p style="color: red">{{error_message}}</p>
+        </div>
         <button type="submit">로그인</button>
       </form>
+      {% if error_message %} {% endif %}
+
       <div>
         <small>아이디가 없으신가요?</small>
-        <a href="/signin"><span>회원가입</span></a>
+        <a href="/signup"><span>회원가입</span></a>
       </div>
     </main>
   </body>
