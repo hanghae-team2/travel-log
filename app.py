@@ -19,7 +19,12 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def home():
-    return render_template('home.html')
+    title = '전국팔도 구석구석'
+    return render_template('home.html', data=title)
+
+@app.route("/byuser/")
+def byuser():
+    return render_template('by-user.html')
 
 
 @app.route('/login')
