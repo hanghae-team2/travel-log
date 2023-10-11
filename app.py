@@ -63,7 +63,7 @@ def byuser():
 @app.route("/create/")
 def registration():
     # 나중에 주소 바꿔야 합니다
-    return render_template('by-user.html')
+    return render_template('registration.html')
 
 
 @app.route('/login', methods=['GET'])
