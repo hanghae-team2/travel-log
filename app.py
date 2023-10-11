@@ -19,21 +19,32 @@ app.config['SQLALCHEMY_DATABASE_URI'] =\
 
 db = SQLAlchemy(app)
 
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(72),  nullable=False)
+    travel_destinations = db.relationship(
+        'TravelDestination', backref='user', lazy=True)
+
 # TravelDestination DB를 만들기 위한 설계도
-# class TravelDestination(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-#     description = db.Column(db.String(500), nullable=False)
-#     title = db.Column(db.String(100), nullable=False)
-#     location = db.Column(db.String(100), nullable=False)
-#     image_url = db.Column(db.String(10000), nullable=False)
-#     likes = db.Column(db.Integer, nullable=False)
 
-#     def __repr__(self):
-#         return f'{self.location} {self.title} {self.likes} 추천 by {self.user_id}'
 
-# with app.app_context():
-#     db.create_all()
+class TravelDestination(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    location = db.Column(db.String(100), nullable=False)
+    image_url = db.Column(db.String(10000), nullable=False)
+    likes = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'{self.location} {self.title} {self.likes} 추천 by {self.user_id}'
+
+
+with app.app_context():
+    db.create_all()
 
 
 @app.route("/")
