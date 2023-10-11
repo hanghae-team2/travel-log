@@ -4,9 +4,12 @@
 1. render_template : html파일을 가져와서 보여준다
 '''
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 import os
 from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
+
 
 # DB 기본 코드
 basedir = os.path.abspath(os.path.dirname(__file__))
