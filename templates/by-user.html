@@ -9,11 +9,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!-- https://flask.palletsprojects.com/en/3.0.x/quickstart/#static-files -->
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/byuser.css')}}">
+
+    <style>
+        .header {
+            background-color: #F1F1F1;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>
-        아무개의 추천 여행지
-    </h1>
+    <div class="header">
+        O O O 님의 추천 여행지
+    </div>
 </body>
 </html>
