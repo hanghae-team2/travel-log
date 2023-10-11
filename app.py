@@ -27,6 +27,9 @@ class User(db.Model):
     travel_destinations = db.relationship(
         'TravelDestination', backref='user', lazy=True)
 
+    def __repr__(self):
+        return f'{self.username} {self.password}'
+
 # TravelDestination DB를 만들기 위한 설계도
 
 
@@ -71,21 +74,21 @@ def getLogin():
     return render_template('login.html')
 
 
-users = [{
-    "username": 'bob1234',
-    "password": "$2b$12$ZRqQ2WM/UWcFlHyTSmWb5upnpB3YzDJw97/.lgkce1e6pqcodVym6"
-},
-    {
-    "username": 'jun1234',
-    "password": "$2b$12$ZRqQ2WM/UWcFlHyTSmWb5upnpB3YzDJw97/.lgkce1e6pqcodVym6"
-}]
+# users = [{
+#     "username": 'bob1234',
+#     "password": "$2b$12$ZRqQ2WM/UWcFlHyTSmWb5upnpB3YzDJw97/.lgkce1e6pqcodVym6"
+# },
+#     {
+#     "username": 'jun1234',
+#     "password": "$2b$12$ZRqQ2WM/UWcFlHyTSmWb5upnpB3YzDJw97/.lgkce1e6pqcodVym6"
+# }]
 
 
 @app.route('/login', methods=['POST'])
 def postLogin():
     username = request.form.get('username')
     # user가 있는지 확인
-    user = [user for user in users if user["username"] == username]
+    user = User.query.filter_by(username=username).all()
 
     # user 없는 경우
     error_message = '아이디 또는 비밀번호가 일치하지 않습니다'
@@ -96,7 +99,7 @@ def postLogin():
     # user가 있는 경우
     password = request.form.get('password')
 
-    password_match = bcrypt.check_password_hash(user[0]["password"], password)
+    password_match = bcrypt.check_password_hash(user[0].password, password)
 
     # # password 틀린 경우
     if not password_match:
@@ -116,7 +119,7 @@ def postSignup():
     username = request.form.get('username')
 
     # user가 있는지 확인
-    user = [user for user in users if user["username"] == username]
+    user = User.query.filter_by(username=username).all()
 
     # user 있는 경우
     if user:
@@ -134,13 +137,10 @@ def postSignup():
 
     # password 같은 경우
     hashed = bcrypt.generate_password_hash(password1).decode('utf-8')
-    new_user = {
-        "username": username,
-        "password": hashed
-    }
 
-    user.append(new_user)
-    print(user)
+    new_user = User(username=username, password=hashed)
+    db.session.add(new_user)
+    db.session.commit()
     return redirect(url_for('getLogin'))
 
 
