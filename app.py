@@ -49,8 +49,8 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    title = '전국팔도 구석구석'
-    return render_template('home.html', data=title)
+    favorite_list = TravelDestination.query.all()
+    return render_template('home.html', data=favorite_list)
 
 
 @app.route("/byuser/")
