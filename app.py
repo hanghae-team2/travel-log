@@ -25,6 +25,7 @@ def home():
     title = '전국팔도 구석구석'
     return render_template('home.html', data=title)
 
+
 @app.route("/byuser/")
 def byuser():
     return render_template('by-user.html')
@@ -105,7 +106,7 @@ def postSignup():
 
     user.append(new_user)
     print(user)
-    return render_template('signup.html')
+    return redirect(url_for('getLogin'))
 
 
 if __name__ == "__main__":
