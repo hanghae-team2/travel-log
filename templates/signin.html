@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입 | 전국팔도 구석구석</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+  </head>
+  <body>
+    <header>
+      <h1>회원가입</h1>
+    </header>
+    <main>
+      <form action="" method="POST">
+        <label for="username">유저 아이디</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          placeholder="아이디를 입력하세요"
+          required
+        />
+        <label for="password1">비밀번호 입력</label>
+        <input
+          id="password1"
+          name="password1"
+          type="text"
+          placeholder="비밀번호를 입력하세요"
+          required
+        />
+        <label for="password2">비밀번호 확인</label>
+        <input
+          id="password2"
+          name="password2"
+          type="text"
+          placeholder="비밀번호를 다시 입력하세요"
+          required
+        />
+        <button type="submit">회원가입</button>
+      </form>
+      <div>
+        <small>이미 아이디가 있으신가요?</small>
+        <a href="/login"><span>회원가입</span></a>
+      </div>
+    </main>
+  </body>
+</html>
