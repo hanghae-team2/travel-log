@@ -94,6 +94,40 @@ def update_likes(id):
 
     favorite_list = TravelDestination.query.all()
     return render_template('home.html', data=favorite_list)
+    
+
+
+
+
+# 게시물 수정
+@app.route("/edit_post/<int:id>", methods=['GET', 'POST'])
+def edit_post(id):
+    post = TravelDestination.query.get_or_404(id)
+
+    if request.method == 'POST':
+        new_title = request.form['title']
+        post.title = new_title
+
+        new_location = request.form['location']
+        post.location = new_location
+
+        new_description = request.form['description']
+        post.description = new_description
+        
+        db.session.commit()
+
+        # 게시물 수정 후, 라우트로 리디렉션
+        return redirect(url_for('view_post', id=id))
+
+    return render_template('post.html', post=post)
+
+
+# 게시물 수정 후, 바뀐 POST보여주기
+@app.route("/view_post/<int:id>")
+def view_post(id):
+    post = TravelDestination.query.get_or_404(id)
+
+    return render_template('view_post.html', post=post)
 
 
 @app.route("/registration/create/")
