@@ -55,19 +55,50 @@ with app.app_context():
     db.create_all()
 
 
+# Check Authentication function
+
+
+def isAuth():
+    token = request.cookies.get('token')
+    # print("Token", token)
+
+    # token 있는지 확인
+    if not token:
+        print("no token")
+        return False
+
+    user = ''
+    # token 유효한지 확인
+    try:
+        decoded = jwt.decode(token, os.environ.get(
+            "JWT_SECRET"), algorithms=["HS256"])
+        user = User.query.filter_by(username=decoded["username"]).all()[0]
+        # 계정 없는 경우 - e.g. 계정 삭제
+        if not user:
+            return False
+    except:
+        print('Invalid Token')
+        return False
+    return user
+
+
 @app.route("/")
 def home():
+    current_user = isAuth()
+
     favorite_list = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).all()
-    return render_template('home.html', data=favorite_list)
+    return render_template('home.html', data=favorite_list, user=current_user)
 
 
 @app.route("/bylocation/<location>", methods=["GET", "POST"])
 def byLocation(location):
+    current_user = isAuth()
+
     filter_list = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.location == location).all()
 
-    return render_template('home.html', data=filter_list)
+    return render_template('home.html', data=filter_list, user=current_user)
 
 
 @app.route("/byuser/<int:user_id>", methods=["GET", "POST"])
@@ -94,9 +125,6 @@ def update_likes(id):
 
     favorite_list = TravelDestination.query.all()
     return render_template('home.html', data=favorite_list)
-    
-
-
 
 
 # 게시물 수정
@@ -113,7 +141,7 @@ def edit_post(id):
 
         new_description = request.form['description']
         post.description = new_description
-        
+
         db.session.commit()
 
         # 게시물 수정 후, 라우트로 리디렉션
@@ -155,30 +183,6 @@ def generate_jwt_token(username):
     return jwt_token
 
 
-# Check Authentication function
-def isAuth():
-    token = request.cookies.get('token')
-    # print("Token", token)
-
-    # token 있는지 확인
-    if not token:
-        print("no token")
-        return False
-
-    # token 유효한지 확인
-    try:
-        decoded = jwt.decode(token, os.environ.get(
-            "JWT_SECRET"), algorithms=["HS256"])
-        user = User.query.filter_by(username=decoded["username"]).all()[0]
-        # 계정 없는 경우 - e.g. 계정 삭제
-        if not user:
-            return False
-    except:
-        print('Invalid Token')
-        return False
-    return True
-
-
 @app.route('/login', methods=['GET'])
 def getLogin():
     return render_template('login.html'), 200
@@ -209,8 +213,7 @@ def postLogin():
     token = generate_jwt_token(username)
 
     # TODO(Joonyoung): login하면 home말고 이전 page로 redirect하기
-    # res = make_response(redirect(url_for('home')))
-    res = make_response(redirect(url_for('test_jwt')))
+    res = make_response(redirect(url_for('home')))
     res.set_cookie('token', token, max_age=int(
         int(os.environ.get('JWT_EXPIRES_SEC'))), httponly=True, secure=True, samesite="none")
     return res
@@ -253,8 +256,7 @@ def postSignup():
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    # res = make_response(redirect('home'))
-    res = make_response(redirect(url_for('test_jwt')))
+    res = make_response(redirect(url_for('home')))
     res.set_cookie('token', '')
     return res, 200
 
@@ -282,12 +284,6 @@ def post(id):
         "user_id": joined[1].username
     }
     return render_template('post.html', data=data), 200
-
-
-@app.route('/test_jwt')
-def test_jwt():
-    favorite_list = TravelDestination.query.all()
-    return render_template('test_jwt.html', data=favorite_list)
 
 
 if __name__ == "__main__":

@@ -28,8 +28,12 @@
     <div>
       <nav class="navbar">
         <a href="{{url_for('home')}}">HOME 🏚️</a>
-        <a href="{{url_for('registration')}}">여행지 추천하기</a>
+        {% if not user %}
         <a href="{{url_for('getLogin')}}">로그인</a>
+        {% endif %} {% if user %}
+        <a href="{{url_for('registration')}}">여행지 추천하기</a>
+        <a class="logout" href="/">로그아웃</a>
+        {% endif %}
       </nav>
 
       <div class="header">
@@ -119,6 +123,12 @@
       $('#scroll-to-top').click(function () {
         // When the button is clicked, the animate() function is called on the html and body elements
         $('html, body').animate({ scrollTop: 0 }, 500);
+      });
+    </script>
+    <script>
+      logoutBtn = document.querySelector('.logout');
+      logoutBtn.addEventListener('click', () => {
+        fetch('/logout', { method: 'POST' });
       });
     </script>
   </body>
