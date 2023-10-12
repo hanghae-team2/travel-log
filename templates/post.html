@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{data.title}} | 전국팔도 구석구석</title>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
   <style>
     .header__meta {
@@ -45,6 +46,12 @@
       <div>
         <p class="post__description">{{data.description}}</p>
       </div>
+      <form class="text-center" action="{{ url_for('edit_post', id=data.id) }}" method="POST">
+        제목: <input type="text" placeholder="제목 변경" name="title">
+        장소: <input type="text" placeholder="장소 변경" name="location">
+        설명: <textarea placeholder="내용 변경" name="description"></textarea>
+        <input type="submit" class="btn btn-light" value="게시물 수정하기">
+      </form>
     </main>
     <footer><button>좋아요 &nbsp; {{data.likes}}</button></footer>
   </body>
