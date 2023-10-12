@@ -67,6 +67,7 @@ body {
     text-decoration: none;
     margin: 10px;
     padding: 10px;
+    color: rgb(19, 121, 155);
   }
   
   .by-location a:hover {

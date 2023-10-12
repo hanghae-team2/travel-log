@@ -17,6 +17,7 @@
 <body>
   <div>
     <nav class="navbar">
+      <a href="{{url_for('home')}}">HOME 🏚️</a>
       <a href="{{url_for('registration')}}">여행지 추천하기</a>
       <a href="{{url_for('getLogin')}}">로그인</a>
     </nav>
@@ -27,10 +28,11 @@
     </div>
 
     <div class="by-location">
-      <a href="">서울</a>
-      <a href="">부산</a>
-      <a href="">대전</a>
-      <a href="">대구</a>
+      {% for element in data %}
+        <form action="{{ url_for('byLocation', location=element.location) }}" method="POST">
+          <input type="submit" class="btn btn-success" value="{{element.location}}">
+        </form>
+      {% endfor %}
     </div>
 
     <div class="cards">
