@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전국팔도 구석구석</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <!-- 카드를 식별하기 위해 각 카드의 고유한 id를 사용한다 -->
+    <header>
+        <h1>{{post.title}}</h1>
+        <div class="header__meta">
+          <p>추천 by {{post.user_id}}</p>
+          <p>{{post.location}}</p>
+        </div>
+      </header>
+      <main>
+        <div class="post__image-container">
+          <img class="post__img" src="{{post.image_url}}" alt="" />
+        </div>
+        <div>
+          <p class="post__description">{{post.description}}</p>
+        </div>
+      </main>
+      <footer></footer>
+</body>
+</html>
