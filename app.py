@@ -74,6 +74,21 @@ def byuser(user_id):
     # print(filter_list)
     return render_template('by-user.html', data=filter_list)
 
+# likes 
+@app.route("/update_likes/<int:id>", methods=["POST"])
+def update_likes(id):
+    # 현재 likes 값을 가져온다
+    like = TravelDestination.query.filter_by(id=id).first()
+
+    # 현재 likes값을 증가시킨다
+    like.likes += 1
+
+    # 데이터베이스에 변경사항을 저장
+    db.session.commit()
+
+    favorite_list = TravelDestination.query.all()
+    return render_template('home.html', data=favorite_list)
+
 
 @app.route("/create/")
 def registration():
