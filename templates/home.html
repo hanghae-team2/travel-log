@@ -107,6 +107,36 @@
       </div>
 
       <button id="scroll-to-top">Top</button>
+
+
+      <!-- 아래는 페이지네이션 링크를 화면의 맨 아래에 표시함 -->
+      <div class="pagination">
+        {% if data.has_prev %}
+            <a href="{{ url_for('home', page=data.prev_num) }}" class="page-link">⬅️</a>
+        {% else %}
+            <span class="page-link disabled">⬅️</span>
+        {% endif %}
+    
+        {% for page in data.iter_pages() %}
+            {% if page %}
+                {% if page != data.page %}
+                    <a href="{{ url_for('home', page=page) }}" class="page-link">{{ page }}</a>
+                {% else %}
+                    <span class="page-link current-page">{{ page }}</span>
+                {% endif %}
+            {% else %}
+                <span class="page-link disabled">...</span>
+            {% endif %}
+        {% endfor %}
+    
+        {% if data.has_next %}
+            <a href="{{ url_for('home', page=data.next_num) }}" class="page-link">➡️</a>
+        {% else %}
+            <span class="page-link disabled">➡️</span>
+        {% endif %}
+    </div>
+    
+
       <footer class="footer">
         <p>All rights reserved.</p>
       </footer>

@@ -124,6 +124,7 @@ a {
 
 .cards {
   border-radius: 30%;
+  min-height: 500px;
 }
 
 .postimg {
@@ -138,4 +139,15 @@ a {
   opacity: 0.9;
   margin-top: 50px;
   margin-bottom: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 35px;
+}
+
+.page-link {
+  font-size: 20px;
 }
