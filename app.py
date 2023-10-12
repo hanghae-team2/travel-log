@@ -274,7 +274,7 @@ def post(id):
 
     joined = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.id == id).all()[0]
-    
+
     data = {
         "id": id,
         "title": joined[0].title,
@@ -288,7 +288,7 @@ def post(id):
     # post owner만 수정 가능
     current_user = isAuth()
     post_owner = joined[1].username
-    is_owner = current_user.username == post_owner
+    is_owner = current_user.username == post_owner if current_user else False
     print(is_owner)
 
     return render_template('post.html', data=data, user=current_user, is_owner=is_owner), 200
