@@ -61,16 +61,16 @@ def home():
     return render_template('home.html', data=favorite_list)
 
 
-@app.route("/byuser/")
-def byuser():
-    return render_template('by-user.html')
+@app.route("/byuser/<int:user_id>", methods=["GET", "POST"])
+def byuser(user_id):
+    filter_list = TravelDestination.query.filter_by(user_id = user_id).all()
 
-# Registration Page
+    # print(filter_list)
+    return render_template('by-user.html', data=filter_list)
 
 
 @app.route("/create/")
 def registration():
-    # 나중에 주소 바꿔야 합니다
     return render_template('registration.html')
 
 
