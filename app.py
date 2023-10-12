@@ -94,9 +94,6 @@ def update_likes(id):
 
     favorite_list = TravelDestination.query.all()
     return render_template('home.html', data=favorite_list)
-    
-
-
 
 
 # 게시물 수정
@@ -113,7 +110,7 @@ def edit_post(id):
 
         new_description = request.form['description']
         post.description = new_description
-        
+
         db.session.commit()
 
         # 게시물 수정 후, 라우트로 리디렉션
@@ -209,8 +206,7 @@ def postLogin():
     token = generate_jwt_token(username)
 
     # TODO(Joonyoung): login하면 home말고 이전 page로 redirect하기
-    # res = make_response(redirect(url_for('home')))
-    res = make_response(redirect(url_for('test_jwt')))
+    res = make_response(redirect(url_for('home')))
     res.set_cookie('token', token, max_age=int(
         int(os.environ.get('JWT_EXPIRES_SEC'))), httponly=True, secure=True, samesite="none")
     return res
@@ -253,8 +249,7 @@ def postSignup():
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    # res = make_response(redirect('home'))
-    res = make_response(redirect(url_for('test_jwt')))
+    res = make_response(redirect(url_for('home')))
     res.set_cookie('token', '')
     return res, 200
 
@@ -282,12 +277,6 @@ def post(id):
         "user_id": joined[1].username
     }
     return render_template('post.html', data=data), 200
-
-
-@app.route('/test_jwt')
-def test_jwt():
-    favorite_list = TravelDestination.query.all()
-    return render_template('test_jwt.html', data=favorite_list)
 
 
 if __name__ == "__main__":
