@@ -15,10 +15,14 @@ body {
 
 .navbar {
   background-color: #87CEFA;
-  display: flex;
-  align-items: center;
-  justify-content:flex-end;
   border-radius: 5px;
+
+  position: fixed;
+  top: 0;
+  width: 97%;
+  overflow: hidden;
+
+  z-index: 1;
 }
 
 .navbar a{
@@ -28,6 +32,7 @@ body {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  font-size: 17px;
 }
 
 .navbar a:hover {
@@ -50,7 +55,6 @@ body {
   }
 
   .by-location {
-    background-color: #F8F8FF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,6 +84,18 @@ body {
     padding: 10px;
   }
 
-  .cards {
-    background-color: #F8F8FF;
+  #scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 20px;
+    border: none;
+    border-radius: 50%;
+    background-color: #217a31;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  #scroll-to-top:hover {
+    background-color: #76a003;
   }
