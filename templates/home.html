@@ -28,9 +28,12 @@
     <div>
       <nav class="navbar">
         <a href="{{url_for('home')}}">HOME 🏚️</a>
-        <a href="{{url_for('registration')}}">여행지 추천하기</a>
+        {% if not user %}
         <a href="{{url_for('getLogin')}}">로그인</a>
+        {% endif %} {% if user %}
+        <a href="{{url_for('registration')}}">여행지 추천하기</a>
         <a class="logout" href="/">로그아웃</a>
+        {% endif %}
       </nav>
 
       <div class="header">

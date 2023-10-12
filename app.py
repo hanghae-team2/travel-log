@@ -55,11 +55,41 @@ with app.app_context():
     db.create_all()
 
 
+# Check Authentication function
+
+
+def isAuth():
+    token = request.cookies.get('token')
+    # print("Token", token)
+
+    # token 있는지 확인
+    if not token:
+        print("no token")
+        return False
+
+    user = ''
+    # token 유효한지 확인
+    try:
+        decoded = jwt.decode(token, os.environ.get(
+            "JWT_SECRET"), algorithms=["HS256"])
+        user = User.query.filter_by(username=decoded["username"]).all()[0]
+        # 계정 없는 경우 - e.g. 계정 삭제
+        if not user:
+            return False
+    except:
+        print('Invalid Token')
+        return False
+    return user
+
+
 @app.route("/")
 def home():
+    current_user = isAuth()
+    print(current_user)
+
     favorite_list = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).all()
-    return render_template('home.html', data=favorite_list)
+    return render_template('home.html', data=favorite_list, user=current_user)
 
 
 @app.route("/bylocation/<location>", methods=["GET", "POST"])
@@ -150,30 +180,6 @@ def generate_jwt_token(username):
         os.environ.get('JWT_SECRET'), algorithm="HS256")
 
     return jwt_token
-
-
-# Check Authentication function
-def isAuth():
-    token = request.cookies.get('token')
-    # print("Token", token)
-
-    # token 있는지 확인
-    if not token:
-        print("no token")
-        return False
-
-    # token 유효한지 확인
-    try:
-        decoded = jwt.decode(token, os.environ.get(
-            "JWT_SECRET"), algorithms=["HS256"])
-        user = User.query.filter_by(username=decoded["username"]).all()[0]
-        # 계정 없는 경우 - e.g. 계정 삭제
-        if not user:
-            return False
-    except:
-        print('Invalid Token')
-        return False
-    return True
 
 
 @app.route('/login', methods=['GET'])
