@@ -54,3 +54,11 @@ body {
   .cards {
     margin-top: 100px;
   }
+
+  .btn-space {
+    margin: 8px;
+  }
+
+  .likes {
+    font-size: 20px;
+  }

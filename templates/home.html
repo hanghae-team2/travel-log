@@ -30,7 +30,7 @@
     <div class="by-location">
       {% for element in data %}
         <form action="{{ url_for('byLocation', location=element.location) }}" method="POST">
-          <input type="submit" class="btn btn-success" value="{{element.location}}">
+          <input type="submit" class="btn btn-dark btn-space" value="{{element.location}}">
         </form>
       {% endfor %}
     </div>
@@ -48,8 +48,11 @@
               <h5 class="card-title">{{favorite.title}}</h5>
               <p class="card-text">{{favorite.location}}</p>
               <p class="card-text">{{favorite.description}}</p>
-              <form action="{{ url_for('byuser', user_id=favorite.user_id) }}" method="POST">
+              <form class="text-center" action="{{ url_for('byuser', user_id=favorite.user_id) }}" method="POST">
                 <input type="submit" class="btn btn-success" value="추천인: {{favorite.user_id}}">
+              </form>
+              <form class="text-right" action="{{ url_for('update_likes', id=favorite.id) }}" method="POST">
+                <input type="submit" class="btn btn-light likes" value="❤️ {{ favorite.likes }}">
               </form>
             </div>
           </div>

@@ -35,6 +35,10 @@ body {
   font-size: 17px;
 }
 
+.btn-space {
+  margin: 8px;
+}
+
 .navbar a:hover {
   background-color: #4682B4;
   color: white;
@@ -99,4 +103,8 @@ body {
 
   #scroll-to-top:hover {
     background-color: #76a003;
+  }
+
+  .likes {
+    font-size: 20px;
   }
