@@ -1,62 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>등록 | 전국팔도 구석구석</title>
-  <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>여행지 등록 | 전국팔도 구석구석</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
-
 <body>
-  <div>
-    <nav class="navbar d-flex justify-content-center">
-      <a href="{{url_for('byuser')}}">테스트</a>
-      <a href="{{url_for('getLogin')}}">로그인</a>
-    </nav>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">여행지 등록</a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('home')}}">홈</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('getLogin')}}">로그인</a>
+      </li>
+    </ul>
+  </nav>
 
-
-
-<main>
-<header>
-<div class="fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="dialog" role="document">
-      <header class="content">
-        <div class="header">
-          <h1 class="title" id="exampleModalLabel">여행지 등록</h1>
-        </div>
-      </header>
-        <div class="body">
-          <form class="container"id="travelForm" onsubmit="submitForm(event)">
-            <label for="location">위치:</label>
-            <input type="text" id="location" name="location" required><br><br>
-  
-            <label for="title">제목:</label>
-            <input type="text" id="title" name="title" required><br><br>
-  
-            <label for="description">설명:</label><br>
-            <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
-  
-            <label for="imageUrl">사진 URL:</label>
-            <input type="text" id="imageUrl" name="imageUrl" required><br><br>
-            <button type="submit" class="btn btn-success">등록하기</button>
-            <!-- drop down button -->
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                지역tag
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">서울</a></li>
-                <li><a class="dropdown-item" href="#">대전</a></li>
-                <li><a class="dropdown-item" href="#">부산</a></li>
-              </ul>
-            </div>
-          </form>
-        </div>
+<div class="container mt-5">
+  <h2>여행지 등록</h2>
+  <form action="{{ url_for('registration')}}" method="GET">
+    
+    <div class="form-group">
+      <label for="location">위치:</label>
+      <input type="text" class="form-control" id="location" name='location'placeholder="위치 입력">
+    </div>
+    <div class="form-group">
+      <label for="title">제목:</label>
+      <input type="text" class="form-control" id="title" name='title' placeholder="제목 입력">
+    </div>
+    <div class="form-group">
+      <label for="description">설명:</label>
+      <textarea class="form-control" id="description" name='explanation' rows="3" placeholder="설명 입력"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="photo">사진url:</label>
+      <input class="form-control" id="image_url" name='image_url' placeholder="imge url"></input>
+    </div>
+    <button type="submit" class="btn btn-primary">등록하기</button>
+    <div class="btn-group ml-3">
+      <!-- <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        지역tag
+      </button> -->
+      <select class="form-select" aria-label="Default select example">
+      <!-- <div class="dropdown-menu"> -->
+        <option class="dropdown-item" href="#">Location Tag</option>
+        <option class="dropdown-item" href="#">서울특별시</option>
+        <option class="dropdown-item" href="#">대전광역시</option>
+        <option class="dropdown-item" href="#">대구광역시</option>
+        <option class="dropdown-item" href="#">인천광역시</option>
+        <option class="dropdown-item" href="#">부산광역시</option>
       </div>
     </div>
-  </div>
-</main>
+  </select>
+  </form>
+</div>
 
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

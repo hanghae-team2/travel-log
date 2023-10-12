@@ -91,8 +91,18 @@ def update_likes(id):
     return render_template('home.html', data=favorite_list)
 
 
-@app.route("/create/")
+@app.route("/registration/create/")
 def registration():
+    user_id_receive = 1
+    location_receive = request.args.get("loction")
+    title_receive = request.args.get("title")
+    explanation_receive = request.args.get("explanation")
+    image_url_receive = request.args.get("image_url")
+    print(request.args)
+    # db 저장
+    # favourite = favourite(user_id=user_id_receive, location=location_receive, title=title_receive, explanation=explanation_receive, image_url=image_url_receive)
+    # db.session.add(favourite)
+    # db.session.commit()
     return render_template('registration.html')
 
 
