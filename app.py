@@ -69,7 +69,7 @@ def byLocation(location):
 
 @app.route("/byuser/<int:user_id>", methods=["GET", "POST"])
 def byuser(user_id):
-    filter_list = TravelDestination.query.filter_by(user_id = user_id).all()
+    filter_list = TravelDestination.query.filter_by(user_id=user_id).all()
 
     # print(filter_list)
     return render_template('by-user.html', data=filter_list)
@@ -87,9 +87,31 @@ def generate_jwt_token(username):
         "exp": datetime.now(tz=timezone.utc) + timedelta(seconds=int(os.environ.get('JWT_EXPIRES_SEC')))},  # TODO(Joonyoung) exp 시간 변경
         os.environ.get('JWT_SECRET'), algorithm="HS256")
 
-    # decoded = jwt.decode(jwt_token, os.environ.get(
-    #     "JWT_SECRET"), algorithms=["HS256"])
     return jwt_token
+
+
+# Check Authentication function
+def isAuth():
+    token = request.cookies.get('token')
+    # print("Token", token)
+
+    # token 있는지 확인
+    if not token:
+        print("no token")
+        return False
+
+    # token 유효한지 확인
+    try:
+        decoded = jwt.decode(token, os.environ.get(
+            "JWT_SECRET"), algorithms=["HS256"])
+        user = User.query.filter_by(username=decoded["username"]).all()[0]
+        # 계정 없는 경우 - e.g. 계정 삭제
+        if not user:
+            return False
+    except:
+        print('Invalid Token')
+        return False
+    return True
 
 
 @app.route('/login', methods=['GET'])
@@ -122,11 +144,11 @@ def postLogin():
     token = generate_jwt_token(username)
 
     # TODO(Joonyoung): login하면 home말고 이전 page로 redirect하기
-    # res = make_response(redirect('home'))
-    res = make_response(redirect('test_jwt'))
+    # res = make_response(redirect(url_for('home')))
+    res = make_response(redirect(url_for('test_jwt')))
     res.set_cookie('token', token, max_age=int(
         int(os.environ.get('JWT_EXPIRES_SEC'))), httponly=True, secure=True, samesite="none")
-    return res, 200
+    return res
 
 
 @app.route('/signup',  methods=['GET'])
@@ -167,14 +189,16 @@ def postSignup():
 @app.route('/logout', methods=['POST'])
 def logout():
     # res = make_response(redirect('home'))
-    res = make_response(redirect('test_jwt'))
+    res = make_response(redirect(url_for('test_jwt')))
     res.set_cookie('token', '')
     return res, 200
 
 
-
 @app.route('/favourite/<id>',  methods=['GET'])
 def post(id):
+    if not isAuth():
+        return redirect(url_for("getLogin"))
+
     post = TravelDestination.query.get(id)
     if not post:
         return redirect(url_for("home"))
@@ -194,7 +218,8 @@ def post(id):
 
 @app.route('/test_jwt')
 def test_jwt():
-    return render_template('test_jwt.html'), 200
+    favorite_list = TravelDestination.query.all()
+    return render_template('test_jwt.html', data=favorite_list)
 
 
 if __name__ == "__main__":

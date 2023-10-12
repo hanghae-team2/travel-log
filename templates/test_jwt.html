@@ -21,12 +21,12 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='stylesheets/home.css')}}"
     />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   </head>
 
   <body>
     <div>
       <nav class="navbar">
-        <a href="{{url_for('byuser')}}">테스트</a>
         <a href="{{url_for('registration')}}">여행지 추천하기</a>
         <a href="{{url_for('getLogin')}}">로그인</a>
         <a class="logout" href="/">로그아웃</a>
@@ -37,7 +37,7 @@
           src="https://cdn.pixabay.com/photo/2018/01/31/05/43/web-3120321_640.png"
           alt="travel bag"
         />
-        <h1>JWT TEST</h1>
+        <h1>전국팔도 구석구석</h1>
       </div>
 
       <div class="by-location">
@@ -63,7 +63,16 @@
                 <h5 class="card-title">{{favorite.title}}</h5>
                 <p class="card-text">{{favorite.location}}</p>
                 <p class="card-text">{{favorite.description}}</p>
-                <p class="card-text">추천인: {{favorite.user_id}}</p>
+                <form
+                  action="{{ url_for('byuser', user_id=favorite.user_id) }}"
+                  method="POST"
+                >
+                  <input
+                    type="submit"
+                    class="btn btn-success"
+                    value="추천인: {{favorite.user_id}}"
+                  />
+                </form>
               </div>
             </div>
           </div>
@@ -71,6 +80,7 @@
         </div>
       </div>
 
+      <button id="scroll-to-top">Top</button>
       <footer class="footer">
         <p>All rights reserved.</p>
       </footer>
@@ -81,6 +91,14 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      // click() function listens for a click on the scroll-to-top button
+      $('#scroll-to-top').click(function () {
+        // When the button is clicked, the animate() function is called on the html and body elements
+        $('html, body').animate({ scrollTop: 0 }, 500);
+      });
+    </script>
     <script>
       logoutBtn = document.querySelector('.logout');
       logoutBtn.addEventListener('click', () => {
