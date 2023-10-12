@@ -60,6 +60,12 @@ def home():
     favorite_list = TravelDestination.query.all()
     return render_template('home.html', data=favorite_list)
 
+@app.route("/bylocation/<location>", methods=["GET", "POST"])
+def byLocation(location):
+    filter_list = TravelDestination.query.filter_by(location = location).all()
+
+    return render_template('home.html', data=filter_list)
+
 
 @app.route("/byuser/<int:user_id>", methods=["GET", "POST"])
 def byuser(user_id):
