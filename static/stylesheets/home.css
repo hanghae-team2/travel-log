@@ -10,11 +10,11 @@ body {
   margin: 0;
   padding: 25px;
   width: auto;
-  background-color: #f2f2f2;;
+  background-color: #f2f2f2;
 }
 
 .navbar {
-  background-color: #87CEFA;
+  background-color: #87cefa;
   border-radius: 5px;
 
   position: fixed;
@@ -25,7 +25,7 @@ body {
   z-index: 1;
 }
 
-.navbar a{
+.navbar a {
   float: right;
   display: block;
   color: #f2f2f2;
@@ -40,71 +40,75 @@ body {
 }
 
 .navbar a:hover {
-  background-color: #4682B4;
+  background-color: #4682b4;
   color: white;
   border-radius: 5px;
 }
 
-  .header {
-    background-color: #F1F1F1;
-    text-align: center;
-    padding: 30px;
-    padding-top: 35px;
-    font-size: 40px;
-  }
+.header {
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 30px;
+  padding-top: 35px;
+  font-size: 40px;
+}
 
-  .header img {
-    width:600px;
-    height: 300px
-  }
+.header img {
+  width: 600px;
+  height: 300px;
+}
 
-  .by-location {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.by-location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .by-location a{
-    color: #0e0d0d;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    margin: 10px;
-    padding: 10px;
-    color: rgb(19, 121, 155);
-  }
-  
-  .by-location a:hover {
-    background-color: #87CEEB;
-    color: white;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 3px;
-    width: 100px;
-  }
+.by-location a {
+  color: #0e0d0d;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  margin: 10px;
+  padding: 10px;
+  color: rgb(19, 121, 155);
+}
 
-  footer {
-    background-color: #F1F1F1;
-    text-align: center;
-    padding: 10px;
-  }
+.by-location a:hover {
+  background-color: #87ceeb;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 3px;
+  width: 100px;
+}
 
-  #scroll-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 20px;
-    border: none;
-    border-radius: 50%;
-    background-color: #217a31;
-    color: #fff;
-    cursor: pointer;
-  }
+footer {
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 10px;
+}
 
-  #scroll-to-top:hover {
-    background-color: #76a003;
-  }
+#scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 20px;
+  border: none;
+  border-radius: 50%;
+  background-color: #217a31;
+  color: #fff;
+  cursor: pointer;
+}
 
-  .likes {
-    font-size: 20px;
-  }
+#scroll-to-top:hover {
+  background-color: #76a003;
+}
+
+.likes {
+  font-size: 20px;
+}
+
+a {
+  text-decoration: none;
+}
