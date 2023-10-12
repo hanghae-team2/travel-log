@@ -4,25 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>전국팔도 구석구석</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='stylesheets/post.css')}}"
+    />
 </head>
 <body>
-    <!-- 카드를 식별하기 위해 각 카드의 고유한 id를 사용한다 -->
+    <nav class="navbar">
+      <a href="{{url_for('home')}}">HOME 🏚️</a>
+    </nav>
     <header>
         <h1>{{post.title}}</h1>
-        <div class="header__meta">
+        <div>
           <p>추천 by {{post.user_id}}</p>
           <p>{{post.location}}</p>
         </div>
       </header>
       <main>
-        <div class="post__image-container">
-          <img class="post__img" src="{{post.image_url}}" alt="" />
+        <div class="img">
+          <img src="{{post.image_url}}" alt="" />
         </div>
-        <div>
-          <p class="post__description">{{post.description}}</p>
+        <div class="desc">
+          <p>{{post.description}}</p>
         </div>
       </main>
-      <footer></footer>
+      <footer class="footer">
+        <p>All rights reserved.</p>
+      </footer>
 </body>
 </html>
