@@ -109,22 +109,23 @@ def byuser(user_id):
     print(filter_list)
     return render_template('by-user.html', data=filter_list)
 
+
 # likes
-
-
 @app.route("/update_likes/<int:id>", methods=["POST"])
 def update_likes(id):
+    current_user = isAuth()
+
     # 현재 likes 값을 가져온다
     like = TravelDestination.query.filter_by(id=id).first()
 
     # 현재 likes값을 증가시킨다
     like.likes += 1
-
     # 데이터베이스에 변경사항을 저장
     db.session.commit()
 
-    favorite_list = TravelDestination.query.all()
-    return render_template('home.html', data=favorite_list)
+    favorite_list = db.session.query(TravelDestination, User).join(
+        User).filter(User.id == TravelDestination.user_id).all()
+    return render_template('home.html', data=favorite_list, user=current_user)
 
 
 # 게시물 수정
@@ -160,7 +161,8 @@ def view_post(id):
 
 @app.route('/create/', methods=['GET'])
 def registration():
-    return render_template('registration.html'),200
+    return render_template('registration.html'), 200
+
 
 @app.route('/create/', methods=['POST'])
 def createRegistration():
@@ -288,7 +290,6 @@ def post(id):
     joined = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.id == id).all()[0]
 
-    
     data = {
         "id": id,
         "title": joined[0].title,
