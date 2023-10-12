@@ -272,8 +272,8 @@ def post(id):
         return redirect(url_for("home"))
 
     joined = db.session.query(TravelDestination, User).join(
-        User).filter(User.id == TravelDestination.user_id).all()[0]
-
+        User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.id == id).all()[0]
+    
     data = {
         "id": id,
         "title": joined[0].title,
@@ -283,7 +283,14 @@ def post(id):
         "likes": joined[0].likes,
         "user_id": joined[1].username
     }
-    return render_template('post.html', data=data), 200
+
+    # post owner만 수정 가능
+    current_user = isAuth()
+    post_owner = joined[1].username
+    is_owner = current_user.username == post_owner
+    print(is_owner)
+
+    return render_template('post.html', data=data, user=current_user, is_owner=is_owner), 200
 
 
 if __name__ == "__main__":
