@@ -60,9 +60,10 @@ def home():
     favorite_list = TravelDestination.query.all()
     return render_template('home.html', data=favorite_list)
 
+
 @app.route("/bylocation/<location>", methods=["GET", "POST"])
 def byLocation(location):
-    filter_list = TravelDestination.query.filter_by(location = location).all()
+    filter_list = TravelDestination.query.filter_by(location=location).all()
 
     return render_template('home.html', data=filter_list)
 
@@ -211,22 +212,25 @@ def logout():
 
 @app.route('/favourite/<id>',  methods=['GET'])
 def post(id):
-    if not isAuth():
-        return redirect(url_for("getLogin"))
+    # authentication 파트
+    # if not isAuth():
+    #     return redirect(url_for("getLogin"))
 
-    post = TravelDestination.query.get(id)
+    post = db.session.get(TravelDestination, id)
     if not post:
         return redirect(url_for("home"))
 
+    joined = db.session.query(TravelDestination, User).join(
+        User).filter(User.id == TravelDestination.user_id).all()[0]
+
     data = {
         "id": id,
-        "title": post.title,
-        "description": post.description,
-        "location": post.location,
-        "image_url": post.image_url,
-        "likes": post.likes,
-        # TODO(Joonyoung) username으로 변경
-        "user_id": post.user_id
+        "title": joined[0].title,
+        "description": joined[0].description,
+        "location": joined[0].location,
+        "image_url": joined[0].image_url,
+        "likes": joined[0].likes,
+        "user_id": joined[1].username
     }
     return render_template('post.html', data=data), 200
 
