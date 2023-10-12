@@ -260,12 +260,13 @@ def logout():
     res.set_cookie('token', '')
     return res, 200
 
+# authentication 파트
+# if not isAuth():
+#     return redirect(url_for("getLogin"))
+
 
 @app.route('/favourite/<id>',  methods=['GET'])
 def post(id):
-    # authentication 파트
-    # if not isAuth():
-    #     return redirect(url_for("getLogin"))
 
     post = db.session.get(TravelDestination, id)
     if not post:
