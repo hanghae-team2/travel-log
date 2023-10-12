@@ -6,53 +6,41 @@
     <title>{{data.title}} | 전국팔도 구석구석</title>
     <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='stylesheets/post.css')}}"
+    />
   </head>
-  <style>
-    .header__meta {
-      display: flex;
-      flex-direction: column;
-      text-align: end;
-    }
-    .post__description {
-      padding: 32px 0;
-      font-size: 1.5rem;
-    }
-    .post__image-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .post__img {
-      width: 80%;
-    }
-    footer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
   <body>
+    <nav class="navbar">
+      <a href="{{url_for('home')}}">HOME 🏚️</a>
+    </nav>
     <header>
       <h1>{{data.title}}</h1>
-      <div class="header__meta">
+      <div>
         <p>추천 by {{data.user_id}}</p>
         <p>{{data.location}}</p>
       </div>
     </header>
     <main>
-      <div class="post__image-container">
-        <img class="post__img" src="{{data.image_url}}" alt="" />
+      <div class="img">
+        <img src="{{data.image_url}}" alt="" />
       </div>
-      <div>
-        <p class="post__description">{{data.description}}</p>
+      <div class="desc">
+        <p>{{data.description}}</p>
       </div>
-      <form class="text-center" action="{{ url_for('edit_post', id=data.id) }}" method="POST">
-        제목: <input type="text" placeholder="제목 변경" name="title">
-        장소: <input type="text" placeholder="장소 변경" name="location">
-        설명: <textarea placeholder="내용 변경" name="description"></textarea>
-        <input type="submit" class="btn btn-light" value="게시물 수정하기">
-      </form>
+      <div class="formdiv">
+        <form class="text-center form" action="{{ url_for('edit_post', id=data.id) }}" method="POST">
+          제목: <input type="text" placeholder="제목 변경" name="title">
+          장소: <input type="text" placeholder="장소 변경" name="location">
+          설명: <textarea placeholder="내용 변경" name="description"></textarea>
+          <input type="submit" class="btn btn-light mybtn" value="게시물 수정하기">
+        </form>
+      </div>
     </main>
-    <footer><button>좋아요 &nbsp; {{data.likes}}</button></footer>
+    <footer>
+      <p>All rights reserved.</p>
+    </footer>
   </body>
 </html>
