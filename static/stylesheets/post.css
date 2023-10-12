@@ -10,7 +10,7 @@ body {
   margin: 0;
   padding: 25px;
   width: auto;
-  background-color: #f2f2f2;
+  background-color: #e6f3ff;
 }
 
 .navbar {
@@ -35,40 +35,39 @@ body {
   font-size: 17px;
 }
 
-#scroll-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 20px;
-  border: none;
-  border-radius: 50%;
-  background-color: #217a31;
-  color: #fff;
-  cursor: pointer;
+.img {
+  display: flex;
+  justify-content: center;
 }
 
-#scroll-to-top:hover {
-  background-color: #76a003;
+.img img {
+  width: 60%;
 }
 
-.cards {
-  margin-top: 100px;
+.desc {
+  display: flex;
+  justify-content: center;
 }
 
-.btn-space {
-  margin: 8px;
+.desc p {
+  width: 60%;
 }
 
-.likes {
-  font-size: 20px;
+.formdiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 }
 
-a {
-  text-decoration: none;
+.form {
+  align-items: center;
+  justify-content: center;
+  width: 70%;
 }
 
 footer {
-  background-color: #f1f1f1;
   text-align: center;
   padding: 10px;
 }
