@@ -1,33 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        /* css */
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column
-        }
-        .title {
-            display: flex;
-            justify-content: center;
-            height: 10vh;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>등록 | 전국팔도 구석구석</title>
+  <link rel="stylesheet" href="https://unpkg.com/mvp.css" />
 </head>
+
 <body>
+  <div>
+    <nav class="navbar d-flex justify-content-center">
+      <a href="{{url_for('byuser')}}">테스트</a>
+      <a href="{{url_for('getLogin')}}">로그인</a>
+    </nav>
 
 
 
-
+<main>
+<header>
 <div class="fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="dialog" role="document">
-      <div class="content">
+      <header class="content">
         <div class="header">
           <h1 class="title" id="exampleModalLabel">여행지 등록</h1>
         </div>
+      </header>
         <div class="body">
           <form class="container"id="travelForm" onsubmit="submitForm(event)">
             <label for="location">위치:</label>
@@ -41,13 +38,25 @@
   
             <label for="imageUrl">사진 URL:</label>
             <input type="text" id="imageUrl" name="imageUrl" required><br><br>
-  
             <button type="submit" class="btn btn-success">등록하기</button>
+            <!-- drop down button -->
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                지역tag
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">서울</a></li>
+                <li><a class="dropdown-item" href="#">대전</a></li>
+                <li><a class="dropdown-item" href="#">부산</a></li>
+              </ul>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+</main>
+
 
 </body>
 </html>
