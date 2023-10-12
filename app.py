@@ -177,19 +177,32 @@ def view_post(id):
     return render_template('view_post.html', post=post)
 
 
-@app.route("/registration/create/")
+@app.route('/create/', methods=['GET'])
 def registration():
+    return render_template('registration.html'),200
+
+@app.route('/create/', methods=['POST'])
+def createRegistration():
     user_id_receive = 1
-    location_receive = request.args.get("loction")
-    title_receive = request.args.get("title")
-    explanation_receive = request.args.get("explanation")
-    image_url_receive = request.args.get("image_url")
-    print(request.args)
-    # db 저장
-    # favourite = favourite(user_id=user_id_receive, location=location_receive, title=title_receive, explanation=explanation_receive, image_url=image_url_receive)
-    # db.session.add(favourite)
-    # db.session.commit()
-    return render_template('registration.html')
+    location_receive = request.form.get("location")
+    title_receive = request.form.get("title")
+    explanation_receive = request.form.get("explanation")
+    image_url_receive = request.form.get("image_url")
+    likes_receive = 0
+
+    travel_destination = TravelDestination(
+        user_id=user_id_receive,
+        location=location_receive,
+        title=title_receive,
+        description=explanation_receive,
+        image_url=image_url_receive,
+        likes=likes_receive
+    )
+
+    db.session.add(travel_destination)
+    db.session.commit()
+
+    return redirect(url_for('registration')), 201
 
 
 # JWT token generator
@@ -270,7 +283,7 @@ def postSignup():
     new_user = User(username=username, password=hashed)
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for('getLogin')), 201
+    return redirect(url_for('getLogin'))
 
 
 @app.route('/logout', methods=['POST'])
@@ -294,6 +307,7 @@ def post(id):
     joined = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.id == id).all()[0]
 
+    
     data = {
         "id": id,
         "title": joined[0].title,
