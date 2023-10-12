@@ -85,7 +85,6 @@ def isAuth():
 @app.route("/")
 def home():
     current_user = isAuth()
-    print(current_user)
 
     favorite_list = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).all()
@@ -94,10 +93,12 @@ def home():
 
 @app.route("/bylocation/<location>", methods=["GET", "POST"])
 def byLocation(location):
+    current_user = isAuth()
+
     filter_list = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.location == location).all()
 
-    return render_template('home.html', data=filter_list)
+    return render_template('home.html', data=filter_list, user=current_user)
 
 
 @app.route("/byuser/<int:user_id>", methods=["GET", "POST"])
