@@ -88,7 +88,7 @@ def generate_jwt_token(username):
 
 @app.route('/login', methods=['GET'])
 def getLogin():
-    return render_template('login.html')
+    return render_template('login.html'), 200
 
 
 @app.route('/login', methods=['POST'])
@@ -101,7 +101,7 @@ def postLogin():
     error_message = '아이디 또는 비밀번호가 일치하지 않습니다'
     if not user:
         print('username not found')
-        return render_template('login.html', error_message=error_message)
+        return render_template('login.html', error_message=error_message), 401
 
     # user가 있는 경우
     password = request.form.get('password')
@@ -110,7 +110,7 @@ def postLogin():
     # password 틀린 경우
     if not password_match:
         print('wrong password')
-        return render_template('login.html', error_message=error_message)
+        return render_template('login.html', error_message=error_message), 401
 
     # password 일치하는 경우 JWT token 생성
     token = generate_jwt_token(username)
@@ -120,12 +120,12 @@ def postLogin():
     res = make_response(redirect('test_jwt'))
     res.set_cookie('token', token, max_age=int(
         int(os.environ.get('JWT_EXPIRES_SEC'))), httponly=True, secure=True, samesite="none")
-    return res
+    return res, 200
 
 
 @app.route('/signup',  methods=['GET'])
 def getSignup():
-    return render_template('signup.html')
+    return render_template('signup.html'), 200
 
 
 @app.route('/signup',  methods=['POST'])
@@ -138,7 +138,7 @@ def postSignup():
     # user 있는 경우
     if user:
         print('username already exists')
-        return render_template('signup.html', error_message='이미 존재하는 아이디입니다.')
+        return render_template('signup.html', error_message='이미 존재하는 아이디입니다.'), 409
 
     # user 없는 경우
     password1 = request.form.get('password1')
@@ -147,7 +147,7 @@ def postSignup():
     # password 다른 경우
     if password1 != password2:
         print("passwords do not match")
-        return render_template('signup.html', error_message='비밀번호가 일치하지 않습니다.')
+        return render_template('signup.html', error_message='비밀번호가 일치하지 않습니다.'), 400
 
     # password 같은 경우
     hashed = bcrypt.generate_password_hash(password1).decode('utf-8')
@@ -155,7 +155,7 @@ def postSignup():
     new_user = User(username=username, password=hashed)
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for('getLogin'))
+    return redirect(url_for('getLogin')), 201
 
 
 @app.route('/logout', methods=['POST'])
@@ -163,7 +163,8 @@ def logout():
     # res = make_response(redirect('home'))
     res = make_response(redirect('test_jwt'))
     res.set_cookie('token', '')
-    return res
+    return res, 200
+
 
 
 @app.route('/favourite/<id>',  methods=['GET'])
@@ -182,12 +183,12 @@ def post(id):
         # TODO(Joonyoung) username으로 변경
         "user_id": post.user_id
     }
-    return render_template('post.html', data=data)
+    return render_template('post.html', data=data), 200
 
 
 @app.route('/test_jwt')
 def test_jwt():
-    return render_template('test_jwt.html')
+    return render_template('test_jwt.html'), 200
 
 
 if __name__ == "__main__":
