@@ -29,6 +29,7 @@
         <a href="{{url_for('byuser')}}">테스트</a>
         <a href="{{url_for('registration')}}">여행지 추천하기</a>
         <a href="{{url_for('getLogin')}}">로그인</a>
+        <a class="logout" href="/">로그아웃</a>
       </nav>
 
       <div class="header">
@@ -80,5 +81,11 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script>
+      logoutBtn = document.querySelector('.logout');
+      logoutBtn.addEventListener('click', () => {
+        fetch('/logout', { method: 'POST' });
+      });
+    </script>
   </body>
 </html>

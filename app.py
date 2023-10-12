@@ -115,6 +115,7 @@ def postLogin():
     # password 일치하는 경우 JWT token 생성
     token = generate_jwt_token(username)
 
+    # TODO(Joonyoung): login하면 home말고 이전 page로 redirect하기
     # res = make_response(redirect('home'))
     res = make_response(redirect('test_jwt'))
     res.set_cookie('token', token, max_age=int(
@@ -155,6 +156,14 @@ def postSignup():
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for('getLogin'))
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    # res = make_response(redirect('home'))
+    res = make_response(redirect('test_jwt'))
+    res.set_cookie('token', '')
+    return res
 
 
 @app.route('/favourite/<id>',  methods=['GET'])
