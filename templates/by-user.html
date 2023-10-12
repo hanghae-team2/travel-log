@@ -10,6 +10,7 @@
             integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!-- https://flask.palletsprojects.com/en/3.0.x/quickstart/#static-files -->
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/byuser.css')}}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <style>
         .header {
@@ -20,8 +21,46 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        O O O 님의 추천 여행지
+    <div>
+        <nav class="navbar">
+            <a href="{{url_for('home')}}">HOME 🏚️</a>
+            <h1> {{ data[0].user_id }} 님의 추천 여행지</h1>
+        </nav>
+    
+        <div class="cards">
+            <!-- Cards -->
+            <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
+              <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
+              {% for favorite in data %}
+              <div class="col">
+                <div class="card h-100">
+                  <img src="{{favorite.image_url}}"
+                    class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">{{favorite.title}}</h5>
+                    <p class="card-text">{{favorite.location}}</p>
+                    <p class="card-text">{{favorite.description}}</p>
+                    <form action="{{ url_for('byuser', user_id=favorite.user_id) }}" method="POST">
+                      <input type="submit" class="btn btn-success" value="추천인: {{favorite.user_id}}">
+                    </form>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+    
+        <button id="scroll-to-top">Top</button>
+        <footer>
+    
+        </footer>
     </div>
+    <script>
+        // click() function listens for a click on the scroll-to-top button
+        $('#scroll-to-top').click(function() {
+          // When the button is clicked, the animate() function is called on the html and body elements
+          $('html, body').animate({scrollTop: 0}, 500)
+        })
+    </script>
 </body>
 </html>
