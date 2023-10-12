@@ -57,13 +57,15 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    favorite_list = TravelDestination.query.all()
+    favorite_list = db.session.query(TravelDestination, User).join(
+        User).filter(User.id == TravelDestination.user_id).all()
     return render_template('home.html', data=favorite_list)
 
 
 @app.route("/bylocation/<location>", methods=["GET", "POST"])
 def byLocation(location):
-    filter_list = TravelDestination.query.filter_by(location=location).all()
+    filter_list = db.session.query(TravelDestination, User).join(
+        User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.location == location).all()
 
     return render_template('home.html', data=filter_list)
 

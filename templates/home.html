@@ -1,83 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>전국팔도 구석구석</title>
+    <!-- bootstrap css cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <!-- https://flask.palletsprojects.com/en/3.0.x/quickstart/#static-files -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='stylesheets/home.css')}}"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>전국팔도 구석구석</title>
-  <!-- bootstrap css cdn -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <!-- https://flask.palletsprojects.com/en/3.0.x/quickstart/#static-files -->
-  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/home.css')}}">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-</head>
+  <body>
+    <div>
+      <nav class="navbar">
+        <a href="{{url_for('home')}}">HOME 🏚️</a>
+        <a href="{{url_for('registration')}}">여행지 추천하기</a>
+        <a href="{{url_for('getLogin')}}">로그인</a>
+      </nav>
 
-<body>
-  <div>
-    <nav class="navbar">
-      <a href="{{url_for('home')}}">HOME 🏚️</a>
-      <a href="{{url_for('registration')}}">여행지 추천하기</a>
-      <a href="{{url_for('getLogin')}}">로그인</a>
-    </nav>
+      <div class="header">
+        <img
+          src="https://cdn.pixabay.com/photo/2018/01/31/05/43/web-3120321_640.png"
+          alt="travel bag"
+        />
+        <h1>전국팔도 구석구석</h1>
+      </div>
 
-    <div class="header">
-      <img src="https://cdn.pixabay.com/photo/2018/01/31/05/43/web-3120321_640.png" alt="travel bag">
-      <h1>전국팔도 구석구석</h1>
-    </div>
-
-    <div class="by-location">
-      {% for element in data %}
-        <form action="{{ url_for('byLocation', location=element.location) }}" method="POST">
-          <input type="submit" class="btn btn-dark btn-space" value="{{element.location}}">
+      <div class="by-location">
+        {% for element in data %}
+        <form
+          action="{{ url_for('byLocation', location=element[0].location) }}"
+          method="POST"
+        >
+          <input
+            type="submit"
+            class="btn btn-dark btn-space"
+            value="{{element[0].location}}"
+          />
         </form>
-      {% endfor %}
-    </div>
-
-    <div class="cards">
-      <!-- Cards -->
-      <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
-        <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
-        {% for favorite in data %}
-        <div class="col">
-          <div class="card h-100">
-            <img src="{{favorite.image_url}}"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{favorite.title}}</h5>
-              <p class="card-text">{{favorite.location}}</p>
-              <p class="card-text">{{favorite.description}}</p>
-              <form class="text-center" action="{{ url_for('byuser', user_id=favorite.user_id) }}" method="POST">
-                <input type="submit" class="btn btn-success" value="추천인: {{favorite.user_id}}">
-              </form>
-              <form class="text-right" action="{{ url_for('update_likes', id=favorite.id) }}" method="POST">
-                <input type="submit" class="btn btn-light likes" value="❤️ {{ favorite.likes }}">
-              </form>
-            </div>
-          </div>
-        </div>
         {% endfor %}
       </div>
+
+      <div class="cards">
+        <!-- Cards -->
+        <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
+          <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
+          {% for favorite in data %}
+          <a href="{{url_for('post', id=favorite[0].id)}}">
+            <div class="col">
+              <div class="card h-100">
+                <img
+                  src="{{favorite[0].image_url}}"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{favorite[0].title}}</h5>
+                  <p class="card-text">{{favorite[0].location}}</p>
+                  <p class="card-text">{{favorite[0].description}}</p>
+                  <form
+                    class="text-center"
+                    action="{{ url_for('byuser', user_id=favorite[0].user_id) }}"
+                    method="POST"
+                  >
+                    <input
+                      type="submit"
+                      class="btn btn-success"
+                      value="추천인: {{favorite[1].username}}"
+                    />
+                  </form>
+                  <form
+                    class="text-right"
+                    action="{{ url_for('update_likes', id=favorite[0].id) }}"
+                    method="POST"
+                  >
+                    <input
+                      type="submit"
+                      class="btn btn-light likes"
+                      value="❤️ {{ favorite[0].likes }}"
+                    />
+                  </form>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button id="scroll-to-top">Top</button>
+      <footer class="footer">
+        <p>All rights reserved.</p>
+      </footer>
     </div>
+    <!-- bootstrap js cdn -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
 
-    <button id="scroll-to-top">Top</button>
-    <footer class="footer">
-      <p>All rights reserved.</p>
-    </footer>
-  </div>
-  <!-- bootstrap js cdn -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
-
-  <script>
-    // click() function listens for a click on the scroll-to-top button
-    $('#scroll-to-top').click(function() {
-      // When the button is clicked, the animate() function is called on the html and body elements
-      $('html, body').animate({scrollTop: 0}, 500)
-    })
-  </script>
-</body>
-
+    <script>
+      // click() function listens for a click on the scroll-to-top button
+      $('#scroll-to-top').click(function () {
+        // When the button is clicked, the animate() function is called on the html and body elements
+        $('html, body').animate({ scrollTop: 0 }, 500);
+      });
+    </script>
+  </body>
 </html>
