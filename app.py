@@ -264,7 +264,7 @@ def postSignup():
     new_user = User(username=username, password=hashed)
     db.session.add(new_user)
     db.session.commit()
-    return redirect(url_for('getLogin')), 201
+    return redirect(url_for('getLogin'))
 
 
 @app.route('/logout', methods=['POST'])
