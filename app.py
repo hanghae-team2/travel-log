@@ -72,12 +72,15 @@ def byLocation(location):
 
 @app.route("/byuser/<int:user_id>", methods=["GET", "POST"])
 def byuser(user_id):
-    filter_list = TravelDestination.query.filter_by(user_id=user_id).all()
+    filter_list = db.session.query(TravelDestination, User).join(
+        User).filter(User.id == TravelDestination.user_id).filter(User.id == user_id).all()
 
-    # print(filter_list)
+    print(filter_list)
     return render_template('by-user.html', data=filter_list)
 
-# likes 
+# likes
+
+
 @app.route("/update_likes/<int:id>", methods=["POST"])
 def update_likes(id):
     # 현재 likes 값을 가져온다
