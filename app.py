@@ -161,6 +161,9 @@ def update_likes(id):
 # 게시물 수정
 @app.route("/edit_post/<int:id>", methods=['GET', 'POST'])
 def edit_post(id):
+    # authentication 파트
+    if not isAuth():
+        return redirect('/login')
     post = TravelDestination.query.get_or_404(id)
 
     if request.method == 'POST':
