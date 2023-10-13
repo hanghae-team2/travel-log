@@ -44,9 +44,9 @@
           action="{{ url_for('edit_post', id=data.id) }}"
           method="POST"
         >
-          제목: <input type="text" placeholder="제목 변경" name="title" /> 장소:
-          <input type="text" placeholder="장소 변경" name="location" /> 설명:
-          <textarea placeholder="내용 변경" name="description"></textarea>
+          제목: <input type="text" placeholder="제목 변경" name="title" value="{{ data.title }}" /> 장소:
+          <input type="text" placeholder="장소 변경" name="location" value="{{ data.location }}" /> 설명:
+          <textarea placeholder="내용 변경" name="description" rows="5" cols="50">{{ data.description }}</textarea>
           <input
             type="submit"
             class="btn btn-light mybtn"
