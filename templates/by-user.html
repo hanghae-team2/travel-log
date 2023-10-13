@@ -38,6 +38,18 @@
         <h1>{{ data[0][1].username }} 님의 추천 여행지</h1>
       </nav>
 
+      <div class="by-location">
+        {% set displayed_locations = [] %}
+        {% for element in data %}
+        {% if element[0].location not in displayed_locations %}
+        <form action="{{ url_for('byLocation', location=element[0].location) }}" method="POST">
+          <input type="submit" class="btn btn-dark btn-space" value="{{element[0].location}}" />
+        </form>
+        {% set _ = displayed_locations.append(element[0].location) %}
+        {% endif %}
+        {% endfor %}
+      </div>
+      
       <div class="cards">
         <!-- Cards -->
         <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
