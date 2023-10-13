@@ -133,6 +133,10 @@ def byuser(user_id):
 @app.route("/update_likes/<int:id>", methods=["POST"])
 def update_likes(id):
     current_user = isAuth()
+    # authentication 파트
+    if not isAuth():
+        error_message = "로그인한 사용자만 추천할 수 있습니다."
+        return render_template("login.html", error_message=error_message), 401
 
     # 현재 likes 값을 가져온다
     like = TravelDestination.query.filter_by(id=id).first()
@@ -188,10 +192,20 @@ def view_post(id):
 
 @app.route('/create/', methods=['GET'])
 def registration():
-    return render_template('registration.html'),200
+    # authentication 파트
+    if not isAuth():
+        error_message = "로그인한 사용자만 포스팅할 수 있습니다."
+        return render_template("login.html", error_message=error_message), 401
+    return render_template('registration.html'), 200
+
 
 @app.route('/create/', methods=['POST'])
 def createRegistration():
+    # authentication 파트
+    if not isAuth():
+        error_message = "로그인한 사용자만 포스팅할 수 있습니다."
+        return render_template("login.html", error_message=error_message), 401
+
     user_id_receive = 1
     location_receive = request.form.get("location")
     title_receive = request.form.get("title")
@@ -307,11 +321,7 @@ def postSignup():
 def logout():
     res = make_response(redirect(url_for('home')))
     res.set_cookie('token', '')
-    return res, 200
-
-# authentication 파트
-# if not isAuth():
-#     return redirect(url_for("getLogin"))
+    return res
 
 
 @app.route('/favourite/<id>',  methods=['GET'])
@@ -324,7 +334,6 @@ def post(id):
     joined = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.id == id).all()[0]
 
-    
     data = {
         "id": id,
         "title": joined[0].title,
