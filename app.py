@@ -325,7 +325,7 @@ def postSignup():
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    res = make_response(redirect(url_for('home')))
+    res = make_response(redirect('/'))
     res.set_cookie('token', '')
     return res
 
