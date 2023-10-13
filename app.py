@@ -83,7 +83,8 @@ def isAuth():
 
 
 def paginate_destinations(page, per_page):
-    destinations = TravelDestination.query.paginate(page=page, per_page=per_page, error_out=False)
+    destinations = TravelDestination.query.paginate(
+        page=page, per_page=per_page, error_out=False)
     return destinations
 
 
@@ -96,10 +97,8 @@ def home():
 
     favorite_list = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).paginate(page=page, per_page=per_page, error_out=False)
-    
 
     return render_template('home.html', data=favorite_list, user=current_user)
-
 
 
 @app.route("/bylocation/<location>", methods=["GET", "POST"])
@@ -125,7 +124,7 @@ def byuser(user_id):
 
     filter_list = db.session.query(TravelDestination, User).join(
         User).filter(User.id == TravelDestination.user_id).filter(User.id == user_id).all()
-    
+
     return render_template('by-user.html', data=filter_list)
 
 # likes
@@ -133,6 +132,8 @@ def byuser(user_id):
 
 @app.route("/update_likes/<int:id>", methods=["POST"])
 def update_likes(id):
+    current_user = isAuth()
+
     # 현재 likes 값을 가져온다
     like = TravelDestination.query.filter_by(id=id).first()
 
@@ -142,8 +143,16 @@ def update_likes(id):
     # 데이터베이스에 변경사항을 저장
     db.session.commit()
 
-    favorite_list = TravelDestination.query.all()
-    return render_template('home.html', data=favorite_list)
+    page = request.args.get('page', type=int, default=1)
+    per_page = 8  # 페이지당 아이템 수 설정
+
+    # favorite_list = db.session.query(TravelDestination, User).join(
+    #     User).filter(User.id == TravelDestination.user_id).all()
+
+    favorite_list = db.session.query(TravelDestination, User).join(
+        User).filter(User.id == TravelDestination.user_id).paginate(page=page, per_page=per_page, error_out=False)
+
+    return render_template('home.html', data=favorite_list, user=current_user)
 
 
 # 게시물 수정
