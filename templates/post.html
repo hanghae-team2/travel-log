@@ -53,20 +53,20 @@
             value="게시물 수정하기"
           />
         </form>
+        <form
+          class="text-center form"
+          action="{{ url_for('delete_post', id=data.id) }}"
+          method="POST"
+        >
         <button type="submit" class="delete-btn btn-light mybtn">
           게시물 삭제하기
         </button>
+        </form>
       </div>
       {% endif %}
     </main>
     <footer>
       <p>All rights reserved.</p>
     </footer>
-    <script>
-      deleteBtn = document.querySelector('.delete-btn');
-      deleteBtn.addEventListener('click', () => {
-        fetch('/delete');
-      });
-    </script>
   </body>
 </html>
