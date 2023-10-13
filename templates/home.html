@@ -35,145 +35,15 @@
     <div class="by-location">
       {% set displayed_locations = [] %}
       {% for element in data %}
-        {% if element[0].location not in displayed_locations %}
-          <form action="{{ url_for('byLocation', location=element[0].location) }}" method="POST">
-            <input type="submit" class="btn btn-dark btn-space" value="{{element[0].location}}" />
-          </form>
-          {% set _ = displayed_locations.append(element[0].location) %}
-        {% endif %}
+      {% if element[0].location not in displayed_locations %}
+      <form action="{{ url_for('byLocation', location=element[0].location) }}" method="POST">
+        <input type="submit" class="btn btn-dark btn-space" value="{{element[0].location}}" />
+      </form>
+      {% set _ = displayed_locations.append(element[0].location) %}
+      {% endif %}
       {% endfor %}
     </div>
 
-<<<<<<< Updated upstream
-      <div class="header">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj0oh92dVAnZrfnc61rYn7rGe9c9_MGzxLkw&usqp=CAU"
-          alt="travel bag"
-        />
-        <h1>전국팔도 구석구석</h1>
-      </div>
-
-      <div class="by-location">
-        {% for element in data %}
-        <form
-          action="{{ url_for('byLocation', location=element[0].location) }}"
-          method="POST"
-        >
-          <input
-            type="submit"
-            class="btn btn-dark btn-space"
-            value="{{element[0].location}}"
-          />
-        </form>
-        {% endfor %}
-      </div>
-
-      <div class="cards">
-        <!-- Cards -->
-        <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
-          <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
-          {% for favorite in data %}
-          <a href="{{url_for('post', id=favorite[0].id)}}">
-            <div class="col">
-              <div class="card h-100">
-                <img
-                  class="postimg"
-                  src="{{favorite[0].image_url}}"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">{{favorite[0].title}}</h5>
-                  <p class="card-text">{{favorite[0].location}}</p>
-                  <p class="card-text">{{favorite[0].description}}</p>
-                  <form
-                    class="text-center"
-                    action="{{ url_for('byuser', user_id=favorite[0].user_id) }}"
-                    method="POST"
-                  >
-                    <input
-                      type="submit"
-                      class="btn btn-success"
-                      value="추천인: {{favorite[1].username}}"
-                    />
-                  </form>
-                  <form
-                    class="text-right"
-                    action="{{ url_for('update_likes', id=favorite[0].id) }}"
-                    method="POST"
-                  >
-                    <input
-                      type="submit"
-                      class="btn btn-light likes"
-                      value="❤️ {{ favorite[0].likes }}"
-                    />
-                  </form>
-                </div>
-||||||| Stash base
-      <div class="header">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj0oh92dVAnZrfnc61rYn7rGe9c9_MGzxLkw&usqp=CAU"
-          alt="travel bag"
-        />
-        <h1>전국팔도 구석구석</h1>
-      </div>
-
-      <div class="by-location">
-        {% for element in data %}
-        <form
-          action="{{ url_for('byLocation', location=element[0].location) }}"
-          method="POST"
-        >
-          <input
-            type="submit"
-            class="btn btn-dark btn-space"
-            value="{{element[0].location}}"
-          />
-        </form>
-        {% endfor %}
-      </div>
-
-      <div class="cards">
-        <!-- Cards -->
-        <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
-          <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
-          {% for favorite in data %}
-          <a href="{{url_for('post', id=favorite[0].id)}}">
-            <div class="col">
-              <div class="card h-100">
-                <img class="postimg"
-                  src="{{favorite[0].image_url}}"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body">
-                  <h5 class="card-title">{{favorite[0].title}}</h5>
-                  <p class="card-text">{{favorite[0].location}}</p>
-                  <p class="card-text">{{favorite[0].description}}</p>
-                  <form
-                    class="text-center"
-                    action="{{ url_for('byuser', user_id=favorite[0].user_id) }}"
-                    method="POST"
-                  >
-                    <input
-                      type="submit"
-                      class="btn btn-success"
-                      value="추천인: {{favorite[1].username}}"
-                    />
-                  </form>
-                  <form
-                    class="text-right"
-                    action="{{ url_for('update_likes', id=favorite[0].id) }}"
-                    method="POST"
-                  >
-                    <input
-                      type="submit"
-                      class="btn btn-light likes"
-                      value="❤️ {{ favorite[0].likes }}"
-                    />
-                  </form>
-                </div>
-=======
     <div class="cards">
       <!-- Cards -->
       <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
@@ -193,87 +63,13 @@
                 <form class="text-right" action="{{ url_for('update_likes', id=favorite[0].id) }}" method="POST">
                   <input type="submit" class="btn btn-light likes" value="❤️ {{ favorite[0].likes }}" />
                 </form>
->>>>>>> Stashed changes
               </div>
             </div>
-<<<<<<< Updated upstream
-          </a>
-          {% endfor %}
-        </div>
-      </div>
-
-      <button id="scroll-to-top">Top</button>
-
-      <!-- 아래는 페이지네이션 링크를 화면의 맨 아래에 표시함 -->
-      <div class="pagination">
-        {% if data.has_prev %}
-        <a href="{{ url_for('home', page=data.prev_num) }}" class="page-link"
-          >⬅️</a
-        >
-        {% else %}
-        <span class="page-link disabled">⬅️</span>
-        {% endif %} 
-           {% for page in data.iter_pages() %} 
-              {% if page %} 
-                {% if page != data.page %}
-                  <a href="{{ url_for('home', page=page) }}" class="page-link">{{ page }}</a>
-                {% else %}
-                  <span class="page-link current-page">{{ page }}</span>
-                {% endif %} 
-                {% else %}
-                  <span class="page-link disabled">...</span>
-                {% endif %} 
-              {% endfor %} {% if data.has_next %}
-        <a href="{{ url_for('home', page=data.next_num) }}" class="page-link"
-          >➡️</a
-        >
-        {% else %}
-        <span class="page-link disabled">➡️</span>
-        {% endif %}
-      </div>
-||||||| Stash base
-          </a>
-          {% endfor %}
-        </div>
-      </div>
-
-      <button id="scroll-to-top">Top</button>
-
-
-      <!-- 아래는 페이지네이션 링크를 화면의 맨 아래에 표시함 -->
-      <div class="pagination">
-        {% if data.has_prev %}
-            <a href="{{ url_for('home', page=data.prev_num) }}" class="page-link">⬅️</a>
-        {% else %}
-            <span class="page-link disabled">⬅️</span>
-        {% endif %}
-    
-        {% for page in data.iter_pages() %}
-            {% if page %}
-                {% if page != data.page %}
-                    <a href="{{ url_for('home', page=page) }}" class="page-link">{{ page }}</a>
-                {% else %}
-                    <span class="page-link current-page">{{ page }}</span>
-                {% endif %}
-            {% else %}
-                <span class="page-link disabled">...</span>
-            {% endif %}
-        {% endfor %}
-    
-        {% if data.has_next %}
-            <a href="{{ url_for('home', page=data.next_num) }}" class="page-link">➡️</a>
-        {% else %}
-            <span class="page-link disabled">➡️</span>
-        {% endif %}
-    </div>
-    
-=======
           </div>
         </a>
         {% endfor %}
       </div>
     </div>
->>>>>>> Stashed changes
 
     <button id="scroll-to-top">Top</button>
 
