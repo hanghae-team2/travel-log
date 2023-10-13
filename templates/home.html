@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>전국팔도 구석구석</title>
-    <!-- bootstrap css cdn -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <!-- https://flask.palletsprojects.com/en/3.0.x/quickstart/#static-files -->
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="{{ url_for('static', filename='stylesheets/home.css')}}"
-    />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  </head>
 
-  <body>
-    <div>
-      <nav class="navbar">
-        <a href="{{url_for('home')}}">HOME 🏚️</a>
-        {% if not user %}
-        <a href="{{url_for('getLogin')}}">로그인</a>
-        {% endif %} {% if user %}
-        <a href="{{url_for('registration')}}">여행지 추천하기</a>
-        <a class="logout" href="/">로그아웃</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>전국팔도 구석구석</title>
+  <!-- bootstrap css cdn -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <!-- https://flask.palletsprojects.com/en/3.0.x/quickstart/#static-files -->
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/home.css')}}" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+  <div>
+    <nav class="navbar">
+      <a href="{{url_for('home')}}">HOME 🏚️</a>
+      {% if not user %}
+      <a href="{{url_for('getLogin')}}">로그인</a>
+      {% endif %} {% if user %}
+      <a href="{{url_for('registration')}}">여행지 추천하기</a>
+      <a class="logout" href="/">로그아웃</a>
+      {% endif %}
+    </nav>
+
+    <div class="header">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj0oh92dVAnZrfnc61rYn7rGe9c9_MGzxLkw&usqp=CAU"
+        alt="travel bag" />
+      <h1>전국팔도 구석구석</h1>
+    </div>
+
+    <div class="by-location">
+      {% set displayed_locations = [] %}
+      {% for element in data %}
+        {% if element[0].location not in displayed_locations %}
+          <form action="{{ url_for('byLocation', location=element[0].location) }}" method="POST">
+            <input type="submit" class="btn btn-dark btn-space" value="{{element[0].location}}" />
+          </form>
+          {% set _ = displayed_locations.append(element[0].location) %}
         {% endif %}
-      </nav>
+      {% endfor %}
+    </div>
 
+<<<<<<< Updated upstream
       <div class="header">
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj0oh92dVAnZrfnc61rYn7rGe9c9_MGzxLkw&usqp=CAU"
@@ -100,8 +109,94 @@
                     />
                   </form>
                 </div>
+||||||| Stash base
+      <div class="header">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj0oh92dVAnZrfnc61rYn7rGe9c9_MGzxLkw&usqp=CAU"
+          alt="travel bag"
+        />
+        <h1>전국팔도 구석구석</h1>
+      </div>
+
+      <div class="by-location">
+        {% for element in data %}
+        <form
+          action="{{ url_for('byLocation', location=element[0].location) }}"
+          method="POST"
+        >
+          <input
+            type="submit"
+            class="btn btn-dark btn-space"
+            value="{{element[0].location}}"
+          />
+        </form>
+        {% endfor %}
+      </div>
+
+      <div class="cards">
+        <!-- Cards -->
+        <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
+          <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
+          {% for favorite in data %}
+          <a href="{{url_for('post', id=favorite[0].id)}}">
+            <div class="col">
+              <div class="card h-100">
+                <img class="postimg"
+                  src="{{favorite[0].image_url}}"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{{favorite[0].title}}</h5>
+                  <p class="card-text">{{favorite[0].location}}</p>
+                  <p class="card-text">{{favorite[0].description}}</p>
+                  <form
+                    class="text-center"
+                    action="{{ url_for('byuser', user_id=favorite[0].user_id) }}"
+                    method="POST"
+                  >
+                    <input
+                      type="submit"
+                      class="btn btn-success"
+                      value="추천인: {{favorite[1].username}}"
+                    />
+                  </form>
+                  <form
+                    class="text-right"
+                    action="{{ url_for('update_likes', id=favorite[0].id) }}"
+                    method="POST"
+                  >
+                    <input
+                      type="submit"
+                      class="btn btn-light likes"
+                      value="❤️ {{ favorite[0].likes }}"
+                    />
+                  </form>
+                </div>
+=======
+    <div class="cards">
+      <!-- Cards -->
+      <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto w-85 pb-5">
+        <!-- 여행지 사진 리스트의 각 항목에 대해서 반복문을 실행한다 -->
+        {% for favorite in data %}
+        <a href="{{url_for('post', id=favorite[0].id)}}">
+          <div class="col">
+            <div class="card h-100">
+              <img class="postimg" src="{{favorite[0].image_url}}" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title">{{favorite[0].title}}</h5>
+                <p class="card-text">{{favorite[0].location}}</p>
+                <p class="card-text">{{favorite[0].description}}</p>
+                <form class="text-center" action="{{ url_for('byuser', user_id=favorite[0].user_id) }}" method="POST">
+                  <input type="submit" class="btn btn-success" value="추천인: {{favorite[1].username}}" />
+                </form>
+                <form class="text-right" action="{{ url_for('update_likes', id=favorite[0].id) }}" method="POST">
+                  <input type="submit" class="btn btn-light likes" value="❤️ {{ favorite[0].likes }}" />
+                </form>
+>>>>>>> Stashed changes
               </div>
             </div>
+<<<<<<< Updated upstream
           </a>
           {% endfor %}
         </div>
@@ -136,30 +231,103 @@
         <span class="page-link disabled">➡️</span>
         {% endif %}
       </div>
+||||||| Stash base
+          </a>
+          {% endfor %}
+        </div>
+      </div>
 
-      <footer class="footer">
-        <p>All rights reserved.</p>
-      </footer>
+      <button id="scroll-to-top">Top</button>
+
+
+      <!-- 아래는 페이지네이션 링크를 화면의 맨 아래에 표시함 -->
+      <div class="pagination">
+        {% if data.has_prev %}
+            <a href="{{ url_for('home', page=data.prev_num) }}" class="page-link">⬅️</a>
+        {% else %}
+            <span class="page-link disabled">⬅️</span>
+        {% endif %}
+    
+        {% for page in data.iter_pages() %}
+            {% if page %}
+                {% if page != data.page %}
+                    <a href="{{ url_for('home', page=page) }}" class="page-link">{{ page }}</a>
+                {% else %}
+                    <span class="page-link current-page">{{ page }}</span>
+                {% endif %}
+            {% else %}
+                <span class="page-link disabled">...</span>
+            {% endif %}
+        {% endfor %}
+    
+        {% if data.has_next %}
+            <a href="{{ url_for('home', page=data.next_num) }}" class="page-link">➡️</a>
+        {% else %}
+            <span class="page-link disabled">➡️</span>
+        {% endif %}
     </div>
-    <!-- bootstrap js cdn -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
+    
+=======
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+>>>>>>> Stashed changes
 
-    <script>
-      // click() function listens for a click on the scroll-to-top button
-      $('#scroll-to-top').click(function () {
-        // When the button is clicked, the animate() function is called on the html and body elements
-        $('html, body').animate({ scrollTop: 0 }, 500);
-      });
-    </script>
-    <script>
-      logoutBtn = document.querySelector('.logout');
-      logoutBtn.addEventListener('click', () => {
-        fetch('/logout', { method: 'POST' });
-      });
-    </script>
-  </body>
+    <button id="scroll-to-top">Top</button>
+
+
+    <!-- 아래는 페이지네이션 링크를 화면의 맨 아래에 표시함 -->
+    <div class="pagination">
+      {% if data.has_prev %}
+      <a href="{{ url_for('home', page=data.prev_num) }}" class="page-link">⬅️</a>
+      {% else %}
+      <span class="page-link disabled">⬅️</span>
+      {% endif %}
+
+      {% for page in data.iter_pages() %}
+      {% if page %}
+      {% if page != data.page %}
+      <a href="{{ url_for('home', page=page) }}" class="page-link">{{ page }}</a>
+      {% else %}
+      <span class="page-link current-page">{{ page }}</span>
+      {% endif %}
+      {% else %}
+      <span class="page-link disabled">...</span>
+      {% endif %}
+      {% endfor %}
+
+      {% if data.has_next %}
+      <a href="{{ url_for('home', page=data.next_num) }}" class="page-link">➡️</a>
+      {% else %}
+      <span class="page-link disabled">➡️</span>
+      {% endif %}
+    </div>
+
+
+    <footer class="footer">
+      <p>All rights reserved.</p>
+    </footer>
+  </div>
+  <!-- bootstrap js cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <script>
+    // click() function listens for a click on the scroll-to-top button
+    $('#scroll-to-top').click(function () {
+      // When the button is clicked, the animate() function is called on the html and body elements
+      $('html, body').animate({ scrollTop: 0 }, 500);
+    });
+  </script>
+  <script>
+    logoutBtn = document.querySelector('.logout');
+    logoutBtn.addEventListener('click', () => {
+      fetch('/logout', { method: 'POST' });
+    });
+  </script>
+</body>
+
 </html>
