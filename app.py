@@ -202,8 +202,16 @@ def createRegistration():
     db.session.add(travel_destination)
     db.session.commit()
 
-    return redirect(url_for('registration')), 201
+    return render_template('home.html'), 200
 
+# 게시물 삭제
+@app.route("/post/delete/<id>", methods=["POST"])
+def delete_post(id):
+    post = Post.query.get(id)
+    db.session.delete(post)
+    db.session.commit()
+
+    return render_template('post.html')
 
 # JWT token generator
 def generate_jwt_token(username):
