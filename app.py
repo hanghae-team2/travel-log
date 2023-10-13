@@ -135,8 +135,7 @@ def update_likes(id):
     current_user = isAuth()
     # authentication 파트
     if not isAuth():
-        error_message = "로그인한 사용자만 추천할 수 있습니다."
-        return render_template("login.html", error_message=error_message), 401
+        return redirect('/login')
 
     # 현재 likes 값을 가져온다
     like = TravelDestination.query.filter_by(id=id).first()
@@ -194,8 +193,7 @@ def view_post(id):
 def registration():
     # authentication 파트
     if not isAuth():
-        error_message = "로그인한 사용자만 포스팅할 수 있습니다."
-        return render_template("login.html", error_message=error_message), 401
+        return redirect('/login')
     return render_template('registration.html'), 200
 
 
@@ -204,8 +202,7 @@ def createRegistration():
     # authentication 파트
     current_user = isAuth()
     if not current_user:
-        error_message = "로그인한 사용자만 포스팅할 수 있습니다."
-        return render_template("login.html", error_message=error_message), 401
+        return redirect('/login')
 
     user_id_receive = current_user.id
     location_receive = request.form.get("location")
