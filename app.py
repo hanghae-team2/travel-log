@@ -5,7 +5,7 @@
 '''
 from datetime import datetime, timezone, timedelta
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import Session
+from sqlalchemy import desc
 from flask_bcrypt import Bcrypt
 import os
 import jwt
@@ -96,7 +96,7 @@ def home():
     per_page = 8  # 페이지당 아이템 수 설정
 
     favorite_list = db.session.query(TravelDestination, User).join(
-        User).filter(User.id == TravelDestination.user_id).paginate(page=page, per_page=per_page, error_out=False)
+        User).filter(User.id == TravelDestination.user_id).order_by(desc(TravelDestination.id)).paginate(page=page, per_page=per_page, error_out=False)
 
     return render_template('home.html', data=favorite_list, user=current_user)
 
@@ -109,7 +109,7 @@ def byLocation(location):
     per_page = 8  # 페이지당 아이템 수 설정
 
     filter_list = db.session.query(TravelDestination, User).join(
-        User).filter(User.id == TravelDestination.user_id).filter(TravelDestination.location == location).paginate(page=page, per_page=per_page, error_out=False)
+        User).filter(User.id == TravelDestination.user_id).order_by(desc(TravelDestination.id)).filter(TravelDestination.location == location).paginate(page=page, per_page=per_page, error_out=False)
 
     return render_template('home.html', data=filter_list, user=current_user)
 
@@ -123,7 +123,7 @@ def byuser(user_id):
     #     User).filter(User.id == TravelDestination.user_id).filter(User.id == user_id).paginate(page=page, per_page=per_page, error_out=False)
 
     filter_list = db.session.query(TravelDestination, User).join(
-        User).filter(User.id == TravelDestination.user_id).filter(User.id == user_id).all()
+        User).filter(User.id == TravelDestination.user_id).order_by(desc(TravelDestination.id)).filter(User.id == user_id).all()
 
     return render_template('by-user.html', data=filter_list)
 
