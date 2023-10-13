@@ -202,11 +202,12 @@ def registration():
 @app.route('/create/', methods=['POST'])
 def createRegistration():
     # authentication 파트
-    if not isAuth():
+    current_user = isAuth()
+    if not current_user:
         error_message = "로그인한 사용자만 포스팅할 수 있습니다."
         return render_template("login.html", error_message=error_message), 401
 
-    user_id_receive = 1
+    user_id_receive = current_user.id
     location_receive = request.form.get("location")
     title_receive = request.form.get("title")
     explanation_receive = request.form.get("explanation")
@@ -225,7 +226,7 @@ def createRegistration():
     db.session.add(travel_destination)
     db.session.commit()
 
-    return render_template('home.html'), 200
+    return redirect(url_for('home'))
 
 # 게시물 삭제
 @app.route("/post/delete/<id>", methods=["POST"])
